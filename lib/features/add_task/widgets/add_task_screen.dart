@@ -127,7 +127,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return "End Time Is Required";
-                              } else if (endTime!.isBefore(startTime!)) {}
+                              } else if (endTime!.isBefore(startTime!)) {
+                                return "end time must be after start time";
+                              }
                             },
                             readOnly: true,
                             onTap: () {
