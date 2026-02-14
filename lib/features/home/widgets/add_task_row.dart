@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/core/widgets/custom_app_button.dart';
+import 'package:todo_app/features/add_task/widgets/add_task_screen.dart';
 
 class AddTaskRow extends StatelessWidget {
-  const AddTaskRow({super.key});
+  final void Function()? onPressed;
+  const AddTaskRow({super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class AddTaskRow extends StatelessWidget {
         ),
         SizedBox(
           width: 150.w,
-          child: CustomAppButton(title: "+ Add Task", onPressed: () {}),
+          child: CustomAppButton(title: "+ Add Task", onPressed: onPressed),
         ),
       ],
     );

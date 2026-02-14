@@ -18,29 +18,4 @@ class TaskModel {
   });
 }
 
-List<TaskModel> allTaskes = [
-  TaskModel(
-    title: "Task 1",
-    startTime: "02:22 pM",
-    endTime: "04:30 AM",
-    description: "i will do this task",
-    statusText: "ToDo",
-    color: Colors.indigo,
-  ),
-  TaskModel(
-    title: "Task 2",
-    startTime: "02:22 pM",
-    endTime: "04:30 AM",
-    description: "i will do this task",
-    statusText: "ToDo",
-    color: Colors.green,
-  ),
-  TaskModel(
-    title: "Task 3",
-    startTime: "02:22 pM",
-    endTime: "04:30 AM",
-    description: "i will do this task",
-    statusText: "ToDo",
-    color: Colors.amber,
-  ),
-];
+List<TaskModel> allTaskes = [];

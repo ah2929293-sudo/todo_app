@@ -6,6 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:todo_app/core/app_constants.dart';
 import 'package:todo_app/core/widgets/custom_app_button.dart';
+import 'package:todo_app/core/widgets/custom_text_form_filed.dart';
 import 'package:todo_app/features/auth/models/user_model.dart';
 import 'package:todo_app/features/home/home_screen.dart';
 
@@ -17,8 +18,6 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final user = Hive.box<UserModel>(AppConstants.userBox).getAt(0);
-
   final ImagePicker picker = ImagePicker();
   XFile? image;
 
@@ -75,31 +74,35 @@ class _AuthScreenState extends State<AuthScreen> {
                 },
               ),
               Divider(),
-              TextFormField(
-                controller: nameController,
-                onTapOutside: (event) {
-                  FocusScope.of(context).unfocus();
-                },
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.indigo),
-                  ),
-                ),
-              ),
+              CustomTextFormFiled(controller: nameController, hintText: ""),
               CustomAppButton(
                 title: "Login",
                 onPressed: () {
-                  Hive.box<UserModel>(AppConstants.userBox).add(
-                    UserModel(
-                      name: nameController.text,
-                      image: image?.path ?? "",
-                    ),
-                  );
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
-                  );
+                  if (image == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Image is required"),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    return;
+                  }
+
+                  Hive.box<UserModel>(AppConstants.userBox)
+                      .add(
+                        UserModel(
+                          name: nameController.text,
+                          image: image!.path,
+                        ),
+                      )
+                      .then((v) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
+                      });
                 },
               ),
             ],

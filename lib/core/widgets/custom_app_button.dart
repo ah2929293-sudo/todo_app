@@ -28,6 +28,7 @@ class CustomAppButton extends StatelessWidget {
           fontSize: 20.sp,
           fontWeight: FontWeight.bold,
         ),
+        textAlign: TextAlign.center,
       ),
     );
   }

@@ -17,7 +17,7 @@ class HomeAppBar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Hello, ${userData?.name ?? "unknown"}",
+                "Hello, ${userData?.name ?? "user"}",
                 style: TextStyle(
                   color: Colors.blue,
                   fontSize: 20.sp,
