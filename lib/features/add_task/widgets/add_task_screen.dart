@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/core/app_constants.dart';
 import 'package:todo_app/core/widgets/custom_app_button.dart';
 import 'package:todo_app/core/widgets/custom_text_form_filed.dart';
 import 'package:todo_app/features/home/models/task_model.dart';
@@ -56,6 +58,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         } else if (value.length < 4) {
                           return "Title must be at least 4 charcters";
                         }
+                        return null;
                       },
                     ),
                     CustomTextFormFiled(
@@ -65,6 +68,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         if (value == null || value.isEmpty) {
                           return "Task Description Is Required";
                         }
+                        return null;
                       },
                       maxLines: 3,
                     ),
@@ -75,6 +79,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         if (value == null || value.isEmpty) {
                           return "Task Date Is Required";
                         }
+                        return null;
                       },
                       suffixIcon: Icon(Icons.date_range),
                       readOnly: true,
@@ -105,6 +110,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                               if (value == null || value.isEmpty) {
                                 return "Start Time Is Required";
                               }
+                              return null;
                             },
                             readOnly: true,
                             onTap: () {
@@ -130,6 +136,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                               } else if (endTime!.isBefore(startTime!)) {
                                 return "end time must be after start time";
                               }
+                              return null;
                             },
                             readOnly: true,
                             onTap: () {
@@ -177,14 +184,24 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 title: "Create Task",
                 onPressed: () {
                   if (formKey.currentState?.validate() ?? false) {
-                    allTaskes.add(
+                    Hive.box<TaskModel>(AppConstants.taskBox).add(
                       TaskModel(
                         title: titleController.text,
                         startTime: startTimeController.text,
                         endTime: endtTimeController.text,
                         description: describtionController.text,
                         statusText: "ToDo",
-                        color: taskColoes[activeIndex],
+                        color: taskColoes[activeIndex].toARGB32(),
+                      ),
+                    );
+                    allTasks.add(
+                      TaskModel(
+                        title: titleController.text,
+                        startTime: startTimeController.text,
+                        endTime: endtTimeController.text,
+                        description: describtionController.text,
+                        statusText: "ToDo",
+                        color: taskColoes[activeIndex].toARGB32(),
                       ),
                     );
                     Navigator.pop(context);
